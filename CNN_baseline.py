@@ -12,14 +12,27 @@ import matplotlib.pyplot as plt
 
 import os
 import random
+import argparse
 import gc #garbage collector for cleaning deleted data from memory
 
 
+# Construct the argument parser
+ap = argparse.ArgumentParser()
+
+# Add the arguments to the parser
+ap.add_argument("-t", "--train", required=True,
+   help="location of the training set")
+ap.add_argument("-e", "--eval", required=True,
+   help="location of the evaluation/test set")
+args = vars(ap.parse_args())
+
 # In[2]:
+train_dir = args['train']
+test_dir = args['eval']
 
+print("Training set location: "+ train_dir)
+print("Testing set location: "+ test_dir)
 
-train_dir = 'C:/Users/eitn35/Documents/EITN35/video_files/frames/Small_train_set/'
-test_dir = 'C:/Users/eitn35/Documents/EITN35/video_files/frames/Small_test_set/'
 
 #rain_person = [train_dir+'{}'.format(i) for i in os.listdir(train_dir) if 'persons_1' in i]  #get person images
 #rain_dogs = [train_dir+'{}'.format(i) for i in os.listdir(train_dir) if 'dogs_1' in i]  #get dog images
@@ -255,8 +268,8 @@ model.save('model_cat&dog1_keras.h5')
 
 #lets plot the train and val curve
 #get the details form the history object
-acc = history.history['acc']
-val_acc = history.history['val_acc']
+acc = history.history['accuracy']
+val_acc = history.history['val_accuracy']
 loss = history.history['loss']
 val_loss = history.history['val_loss']
 
